@@ -22,7 +22,7 @@ title: TechQuadBit
 email: alexander@activcount.ca
 description: "Stories. Thoughts. Ideas."
 baseurl: "" # the subpath of your site, e.g. /blog
-url: "https://techquadbit.net" # the base hostname & protocol for your site, e.g. http://example.com
+url: "https://web.techquadbit.net" # the base hostname & protocol for your site, e.g. http://example.com
 twitter_username: jekyllrb
 github_username:  jekyll
 
