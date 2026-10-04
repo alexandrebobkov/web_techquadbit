@@ -27,9 +27,15 @@ twitter_username: jekyllrb
 github_username:  jekyll
 
 # Build settings
-theme: minima
+#theme: minima
+remote_theme: pages-themes/cayman
+show_downloads: false
 plugins:
+  - jekyll-remote-theme
   - jekyll-feed
+header_pages:
+  - about.markdown
+  - blog.markdown
 
 # Exclude from processing.
 # The following items will not be processed, by default.
