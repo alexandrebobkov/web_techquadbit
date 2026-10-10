@@ -97,4 +97,6 @@ The schematic excerpt provided below illustrates the wiring configuration for th
 
 The image of the PCB board below depicts the physical locations of the SDA and SCL terminals.
 
+![ESP32-C I2C]({{ '/assets/images/ESP32-C3-BreadBoardAdapterPinout.png' | relative_url }})
+
 KiCAD PCB, Schematic files and more on GitHub: https://github.com/alexandrebobkov/ESP32-C3_Breadboard-Adapter
