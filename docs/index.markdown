@@ -7,7 +7,8 @@ title: TechQuadBit
 permalink: /
 ---
 
-# Welcome to TechQuadBit
+# TechQuadBit
+## Thoughts, stories and ideas.
 
 - [About](/about/)
 - [Blog](/blog/)
