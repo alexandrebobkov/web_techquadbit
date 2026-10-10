@@ -160,11 +160,11 @@ static void sendData (void)
         deletePeer();
     }
 }
-``
+```
 
 Lastly, the statusDataSend() function serves as a callback that is automatically triggered after each ESP-NOW data transmission. Its primary role is to check whether the data was sent successfully and to provide feedback based on the result. If the transmission is successful, the function logs a confirmation message along with the MAC address of the receiving device. However, in the event of a failure, the function also removes the peer configuration using deletePeer() and restarts the device with esp_restart() to attempt another transmission session. This callback is essential for monitoring the reliability of communication.
 
-`` c
+``` c
 // Callback function to handle the status of data transmission
 // This function is called when the data is sent or if there is an error.
 static void statusDataSend(const uint8_t *mac_addr, esp_now_send_status_t status)
