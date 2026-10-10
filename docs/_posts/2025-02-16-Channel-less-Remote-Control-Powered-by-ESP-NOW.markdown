@@ -1,10 +1,10 @@
 ---
 layout: default
-title: Channel-less Remote Control powered by ESP-NOW
+title: Channel-Less Remote Control powered by ESP-NOW
 date: 2025-07-27 09:00:00 -0400
 ---
 
-![ESP-NOW Communication]({{ '/assets/images/joystick.png' | relative_url }})
+![ESP-NOW Communication]({{ '/assets/images/joystick.jpg' | relative_url }})
 
 This article discusses the development of a remote control system using ESP32-C3 Breadboard Adapter powered by ESP-NOW protocol. This protocol offers efficient, low-latency, and low-power communication between ESP32 devices without the need for a Wi-Fi network.
 
