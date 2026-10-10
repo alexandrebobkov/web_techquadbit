@@ -40,7 +40,7 @@ The part of code responsible for initializing ESP-NOW is the same both the syste
 
 This function is essential for both transmitter and receiver devices, as ESP-NOW must be initialized before sending or receiving any data.
 
-`
+``` c
 void app_main(void)
 {
     // Initialize NVS
@@ -68,7 +68,7 @@ void wifi_init()
     ESP_ERROR_CHECK( esp_wifi_set_protocol(ESPNOW_WIFI_IF, WIFI_PROTOCOL_11B|WIFI_PROTOCOL_11G|WIFI_PROTOCOL_11N|WIFI_PROTOCOL_LR) );
     #endif
 }
-`
+```
 
 ## MOVING ON TO TRANSMITTER & RECEIVER DEVICES
 
@@ -78,7 +78,8 @@ On the transmitter device, the code is organized around two main functions: tran
 
 The code block below outlines the function responsible for initializing the ESP-NOW protocol on the transmitter device. Specifically, the transmission_init() function begins by calling esp_now_init() to activate the ESP-NOW feature. If initialization is successful, the program proceeds to register a callback function, statusDataSend, which is triggered after each transmission to verify whether the data was sent correctly. A key part of this setup involves specifying the receiving device using its MAC address, along with other configuration parameters such as the communication channel and encryption settings. These details are then registered using esp_now_add_peer(). Finally, a FreeRTOS task named rc_send_data_task is created to manage the periodic transmission of remote control data. This structured approach ensures that the transmitter is properly configured for reliable communication with the receiver using ESP-NOW.
 
-`void transmission_init()
+``` c
+void transmission_init()
 {
     esp_err_t espnow_ret = esp_now_init();
     if (espnow_ret != ESP_OK) {
@@ -97,11 +98,11 @@ The code block below outlines the function responsible for initializing the ESP-
     // Defince a task for periodically sending ESPNOW remote control data
     xTaskCreate(rc_send_data_task, "RC", 2048, NULL, 4, NULL);
 }
-`
+```
 
 The FreeRTOS task for executing the function for sending the data every 100 ms is as follows:
 
-`
+``` c
 // Task to periodically send ESPNOW remote control data
 static void rc_send_data_task()
 {
@@ -112,13 +113,13 @@ static void rc_send_data_task()
         vTaskDelay (100 / portTICK_PERIOD_MS);
     }
 }
-`
+```
 
 Finally, shown below is the sendData() function responsible for preparing and transmitting a structured set of control data from the transmitter device to the receiver using the ESP-NOW protocol. It begins by updating the fields of a data buffer, including joystick coordinates, button states, LED status, and PWM values for four motors. Note that the composition of variables corresponds to the data struct defined earlier.
 
 Before sending the data, the function retrieves and logs the current Wi-Fi channel to ensure the device is operating on the correct frequency. It then calls esp_now_send(), passing the receiver’s MAC address, a pointer to the data buffer, and the size of the data. If the transmission fails, the function logs detailed error messages, including the error code and the receiver’s MAC address, and calls deletePeer() to remove the peer configuration. This function plays a central role in the communication process, ensuring that the transmitter sends the data to the receiver while providing feedback in case of transmission issues.
 
-`
+``` c
 static void sendData (void)
 {
     buffer.crc = 0;
@@ -159,8 +160,11 @@ static void sendData (void)
         deletePeer();
     }
 }
+``
+
 Lastly, the statusDataSend() function serves as a callback that is automatically triggered after each ESP-NOW data transmission. Its primary role is to check whether the data was sent successfully and to provide feedback based on the result. If the transmission is successful, the function logs a confirmation message along with the MAC address of the receiving device. However, in the event of a failure, the function also removes the peer configuration using deletePeer() and restarts the device with esp_restart() to attempt another transmission session. This callback is essential for monitoring the reliability of communication.
 
+`` c
 // Callback function to handle the status of data transmission
 // This function is called when the data is sent or if there is an error.
 static void statusDataSend(const uint8_t *mac_addr, esp_now_send_status_t status)
@@ -180,13 +184,13 @@ static void statusDataSend(const uint8_t *mac_addr, esp_now_send_status_t status
         esp_restart();
     }
 }
-`
+```
 
 ## Receiver
 
 On the receiver device, the code is slightly simpler, as its primary role is to receive and process incoming data. Within the app_main() function, the transmitter device is registered by specifying its MAC address and communication parameters using the esp_now_peer_info_t structure. This includes setting the Wi-Fi interface, communication channel, and encryption settings. Once the peer information is configured, it is added to the ESP-NOW peer list using esp_now_add_peer(). Importantly, a callback function named onDataReceived is registered using esp_now_register_recv_cb(). This function is automatically triggered whenever data is received, allowing the program to store the incoming information into a predefined data structure. This setup ensures that the receiver is properly configured to recognize the transmitter and handle incoming ESP-NOW messages efficiently.
 
-`
+``` c
 esp_now_peer_info_t transmitterInfo = {0};
 memcpy(transmitterInfo.peer_addr, transmitter_mac, ESP_NOW_ETH_ALEN);
 transmitterInfo.channel = 0; // Current WiFi channel
@@ -195,15 +199,18 @@ transmitterInfo.encrypt = false;
 ESP_ERROR_CHECK(esp_now_add_peer(&transmitterInfo));
 
 ESP_ERROR_CHECK(esp_now_register_recv_cb((void*)onDataReceived));
+```
+
 The onDataReceived() function is designed to handle incoming data on the receiver device in an ESP-NOW communication setup. When data is received, this callback function is automatically triggered. It begins by logging the MAC address of the transmitting device and the length of the received data, which helps verify the source and size of the transmission. The actual data is then copied into a predefined buffer using memcpy(), allowing the receiver to store and later process the information in a structured format. This function plays a key role in ensuring that incoming data is captured accurately and efficiently for further use within the application.
 
+``` c
 void onDataReceived (const uint8_t *mac_addr, const uint8_t *data, uint8_t data_len) {
 
     ESP_LOGI(TAG, "Data received from: %02x:%02x:%02x:%02x:%02x:%02x, len=%d", mac_addr[0], mac_addr[1], mac_addr[2], mac_addr[3], mac_addr[4], mac_addr[5], data_len);
 
     memcpy(&buf, data, sizeof(buf));
 }
-`
+```
 
 # CONCLUSION
 
