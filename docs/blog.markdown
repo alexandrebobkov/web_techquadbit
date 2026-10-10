@@ -1,5 +1,5 @@
 ---
 layout: home
-title: Smart Starts
+title: Posts
 permalink: /blog/
 ---
