@@ -1,17 +1,25 @@
+---
+layout: default
+title: Channel-less Remote Control powered by ESP-NOW
+date: 2025-07-27 09:00:00 -0400
+---
+
 This article discusses the development of a remote control system using ESP32-C3 Breadboard Adapter powered by ESP-NOW protocol. This protocol offers efficient, low-latency, and low-power communication between ESP32 devices without the need for a Wi-Fi network.
 
 A regular analog RC controller with a fixed number of channels restricts the number of functions you can control, making it less versatile. These controllers may have limited flexibility, making it difficult to adapt to different devices or applications. Upgrading or adding new features can be complex and often requires significant modifications. Additionally, they typically have a limited range, which can be problematic for long-distance control.
 ESP-NOW is a versatile communication protocol that offers seamless data transmission between a Controller and a Receiver. This protocol is particularly advantageous due to its simplicity and efficiency, enabling devices to exchange information without the need for a complex network setup. By leveraging ESP-NOW, users can establish a direct, low-latency connection between devices, making it ideal for applications that require quick and reliable data transfer.
 
-Building a remote controller using ESP-NOW involves several steps, including wiring up ESP32-C3 Breadboard Adapter, programming the microcontroller to handle the data to be transmitted/received, and establishing communication between the transmitter and receiver.
+Building a remote controller using ESP-NOW involves several steps, including wiring up ESP32-C3 __Breadboard Adapter__, programming the microcontroller to handle the data to be transmitted/received, and establishing communication between the transmitter and receiver.
 
 Imagine you have a remote-controlled car. The transmitter (remote controller) reads the position of a joystick and sends this data to the receiver in the car using ESP-NOW. The receiver processes this data to control the car's motors, steering, and other functions, enabling you to control the car with minimal delay remotely.
 
-First Things First. Define the Data to be Sent
+## First Things First. Define the Data to be Sent
+
 Let's begin with Remote Controller for controlling the speed of four DC motors. To accomplish this, we can read the voltage on joystick x- and y- analog output pins using ESP32-C3 ADC, and then send those values to the receiver device for further processing.
 
 The x- and y-values representing the joystick's position can be saved using a C struct, which will then be encapsulated and sent to the receiving device. The struct can look something like this:
 
+``` c
 // Struct holding sensors values
 typedef struct {
     uint16_t    crc;                // CRC16 value of ESPNOW data
@@ -19,20 +27,27 @@ typedef struct {
     uint8_t     y_axis;             // Joystick y-position
     bool        nav_bttn;           // Joystick push button
 } __attribute__((packed)) joystick_xy_data_t;
-Remote Controller (Transmitter)
+```
+
+## Remote Controller (Transmitter)
 A remote controller powered by ESP-NOW is a wireless control system that uses the ESP-NOW protocol for communication. For this purpose, we can use ESP32-C3 Breadboard Adapter that reads joystick position and sends this data over peer-to-peer network using the ESP-NOW wireless communication protocol.
 
-Reading and Sending x- and y- Values.
+### Reading and Sending x- and y- Values.
+
 To read joystick x- and y- analog values, we may utilize ESP32-C3 ADC as follows:
 
+``` c
 static int adc_raw[2][10];
 
 static void joystick_get_xy () {
   ESP_ERROR_CHECK(adc_oneshot_read(adc1_handle, ADC1_CHAN0, &adc_raw[0][0]));
   ESP_ERROR_CHECK(adc_oneshot_read(adc1_handle, ADC1_CHAN1, &adc_raw[0][1]));
 }
+```
+
 Once x- and y- values are obtained and saved, they can be sent to the receiver. Using ESP-NOW, we can do so with a sendData() function as follows:
 
+``` c
 // Function to send data to the receiver
 void sendData (void) {
   joystick_xy_data_t buffer;   // Declare data struct
@@ -54,8 +69,11 @@ void sendData (void) {
   else
         ESP_LOGW("ESP-NOW", "Data was sent.");
 }
+```
+
 Finally, to read joystick x, y values, and to send them to the receiver, we may periodically call the corresponding function using FreeRTOS task as follows:
 
+``` c
 // Continously, send x- and y- values.
 static void rc_send_data_task (void *arg) {
   while (true) {
@@ -66,7 +84,10 @@ static void rc_send_data_task (void *arg) {
     vTaskDelay (100 / portTICK_PERIOD_MS);
   }
 }
-Receiving Device
+```
+
+## Receiving Device
+
 Converting Joystick x- and y- Position Values to the PWM Values
 The joystick, by its design, outputs analog voltages ranging from 0V to 3.3V on both the x- and y-axes, depending on the position of the joystick. These voltage levels are raw values and differ from the PWM (Pulse Width Modulation) values required for controlling DC motors' rotation and direction. However, we can utilize the ADC available on ESP32-C3 to convert an analog signal to a digital value, and then convert it to the corresponding PWM value.
 
@@ -78,6 +99,7 @@ As joystick x- and y-coordinates change, so do voltages on corresponding joystic
 
 Similarly, as the joystick is pushed to its maximum positions along the x- or y-axis, the voltage on the corresponding pin will increase to 3.3V. Based on this maximum voltage, the ADC would convert it to a value of 2048, which in turn would be converted to a PWM value of 8192, which corresponds to a 100% duty cycle on the receiver side, resulting in full-speed operation of the DC motors.
 
+``` c
 static int rescale_raw_xy_val (int raw) {
   int s;
   s = 4*raw - 8190;
@@ -111,3 +133,4 @@ void onDataReceived (uint8_t *mac_addr, uint8_t *data, uint8_t data_len) {
   y_axis = buf.y_axis;
   update_pwm(x_axis, y_axis);
 }
+```
