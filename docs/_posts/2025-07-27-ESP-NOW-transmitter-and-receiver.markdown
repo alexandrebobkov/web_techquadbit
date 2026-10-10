@@ -20,7 +20,7 @@ For example, the code defining and handling the data must be consistent to ensur
 
 The following struct defines the format and organization of the data being transmitted from the sender to the receiver in an ESP-NOW communication setup. Each field represents a specific sensor reading or control signal that the receiving device will interpret and act upon accordingly.
 
-`
+``` c
 typedef struct {
     uint16_t    crc;                // CRC16 value of ESPNOW data
     int         x_axis;             // Joystick x-position
@@ -32,7 +32,7 @@ typedef struct {
     uint8_t     motor3_rpm_pwm;
     uint8_t     motor4_rpm_pwm;
 } __attribute__((packed)) sensors_data_t;
-`
+```
 
 ### Getting ESP-NOW Ready
 
