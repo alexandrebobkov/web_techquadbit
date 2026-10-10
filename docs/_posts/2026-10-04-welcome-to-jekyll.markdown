@@ -1,6 +1,6 @@
 ---
 layout: default
-title:  "Welcome to Jekyll!"
+title:  "Welcome to techquadbit!"
 date:   2026-10-04 02:30:05 -0400
 categories: jekyll update
 ---
