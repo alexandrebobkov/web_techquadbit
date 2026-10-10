@@ -4,6 +4,8 @@ title: Channel-less Remote Control powered by ESP-NOW
 date: 2025-07-27 09:00:00 -0400
 ---
 
+joystick
+
 This article discusses the development of a remote control system using ESP32-C3 Breadboard Adapter powered by ESP-NOW protocol. This protocol offers efficient, low-latency, and low-power communication between ESP32 devices without the need for a Wi-Fi network.
 
 A regular analog RC controller with a fixed number of channels restricts the number of functions you can control, making it less versatile. These controllers may have limited flexibility, making it difficult to adapt to different devices or applications. Upgrading or adding new features can be complex and often requires significant modifications. Additionally, they typically have a limited range, which can be problematic for long-distance control.
