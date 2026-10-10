@@ -1,6 +1,6 @@
 ---
 layout: default
-title: ESP-NOW Transmitter & Receiver Devices"
+title: ESP-NOW Transmitter & Receiver Devices
 date: 2025-07-27 09:00:00 -0400
 ---
 
