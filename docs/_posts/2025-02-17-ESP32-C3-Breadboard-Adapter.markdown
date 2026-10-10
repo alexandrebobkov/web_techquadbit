@@ -34,41 +34,44 @@ Explore its capabilities and push the boundaries of your creativity and technica
 
 ### Connectivity:
 
-- Wi-Fi:
-802.11b/g/n, up to 150 Mbps (802.11n), frequency range: 2412 ~ 2484 MHz
-Four virtual Wi-Fi interfaces
-simultaneous support SoftAP mode, Station + SoftAP mode and promiscuous mode
-Bluetooth:
-Bluetooth 5, Bluetooth mesh, 125 Kbps, 500 Kbps, 1 Mbps, 2 Mbps
-Features: Advertising extensions, multiple advertisement sets, channel selection algorithm #2
-Co-existence mechanism: Internal co-existence mechanism between Wi-Fi and Bluetooth to share the same antenna
+  - Wi-Fi:
+  - 802.11b/g/n, up to 150 Mbps (802.11n), frequency range: 2412 ~ 2484 MHz
+  - Four virtual Wi-Fi interfaces
+  - simultaneous support SoftAP mode, Station + SoftAP mode and promiscuous mode
+  - Bluetooth:
+    - Bluetooth 5, Bluetooth mesh, 125 Kbps, 500 Kbps, 1 Mbps, 2 Mbps
+    - Features: Advertising extensions, multiple advertisement sets, channel selection algorithm #2
+    - Co-existence mechanism: Internal co-existence mechanism between Wi-Fi and Bluetooth to share the same antenna
 
 ### Security:
 
-RSA-3072-based secure boot and the AES-128/256-XTS flash encryption Peripherals:
-GPIOs: Up to 22 GPIOs, including 4 strapping GPIOs
+  - RSA-3072-based secure boot and the AES-128/256-XTS flash encryption Peripherals:
+
+### GPIOs: 
+
+  - Up to 22 GPIOs, including 4 strapping GPIOs
 
 ### Interfaces:
 
-SPI
-Two UART
-I2C
-I2S
-LED PWM, up to 6 channels
-Full-speed USB 2.0 OTG
-USB Serial/JTAG controller
-TWAI® controller (compatible with ISO 11898-1)
-12-bit ADC, up to 6 channels
-Touch sensor
-Temperature sensor
-Two 54-bit general purpose timers
-Three digital and one analog watchdog timers
+  - SPI
+  - Two UART
+  - I2C
+  - I2S
+  - LED PWM, up to 6 channels
+  - Full-speed USB 2.0 OTG
+  - USB Serial/JTAG controller
+  - TWAI® controller (compatible with ISO 11898-1)
+  - 12-bit ADC, up to 6 channels
+  - Touch sensor
+  - Temperature sensor
+  - Two 54-bit general purpose timers
+  - Three digital and one analog watchdog timers
 
 ### Integrated Components:
 
-Crystal Oscillator: 40 MHz
-Flash: Up to 16 MB Quad SPI flash
-Antenna: on-board PCB antenna
+  - Crystal Oscillator: 40 MHz
+  - Flash: Up to 16 MB Quad SPI flash
+  - Antenna: on-board PCB antenna
 
 ### Operating Conditions:
 
@@ -99,4 +102,4 @@ The image of the PCB board below depicts the physical locations of the SDA and S
 
 ![ESP32-C I2C]({{ '/assets/images/ESP32-C3-BreadBoardAdapterPinout.png' | relative_url }})
 
-KiCAD PCB, Schematic files and more on GitHub: https://github.com/alexandrebobkov/ESP32-C3_Breadboard-Adapter
+KiCAD PCB, Schematic files and more on GitHub: [Schematic](https://github.com/alexandrebobkov/ESP32-C3_Breadboard-Adapter)
