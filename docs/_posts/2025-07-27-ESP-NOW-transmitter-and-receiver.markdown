@@ -4,6 +4,8 @@ title: ESP-NOW Transmitter & Receiver Devices
 date: 2025-07-27 09:00:00 -0400
 ---
 
+![ESP-NOW Communication]({{ '/assets/images/ESP32-Node_001-2--2-.png' | relative_url }})
+
 This post introduces ESP-NOW communication between two ESP32s: one sends control data using FreeRTOS tasks; the other receives it via a callback. It highlights MAC registration, shared data structures, and consistent Wi-Fi settings for reliable peer-to-peer messaging.
 
 This post presents a practical introduction to implementing ESP-NOW communication between two ESP32 microcontrollers, one configured as a transmitter and the other as a receiver. The transmitter collects control data—such as joystick positions and motor PWM values—and sends it using a structured format and FreeRTOS tasks to manage concurrent operations. The sendData() function handles data preparation and transmission, while a callback monitors delivery status and manages errors.
