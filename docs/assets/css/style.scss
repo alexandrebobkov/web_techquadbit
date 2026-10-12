@@ -278,7 +278,7 @@ a:hover { text-decoration: underline; }
     color: #fff;
     text-align: center;
     /*background-color: #159957;*/
-    background-image: linear-gradient(rgba(#000, 0.85), rgba(#000, 0.85)), url('{{ "/assets/images/banner.jpg" | relative_url }}');
+    background-image: url('{{ "/assets/images/banner.jpg" | relative_url }}');
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
