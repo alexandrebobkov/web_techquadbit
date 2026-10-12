@@ -1,4 +1,7 @@
-.site-header {
+---
+---
+
+.page-header {
     background-image: url('{{ "/assets/images/banner.jpg" | relative_url }}');
     background-size: cover;
     background-position: center;
