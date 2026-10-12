@@ -277,8 +277,8 @@ a:hover { text-decoration: underline; }
 .page-header {
     color: #fff;
     text-align: center;
-    background-color: #159957;
-    background-image: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url('{{ "/assets/images/banner.jpg" | relative_url }}');
+    /*background-color: #159957;*/
+    background-image: linear-gradient(rgba(#000, 0.85), rgba(#000, 0.85)), url('{{ "/assets/images/banner.jpg" | relative_url }}');
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
