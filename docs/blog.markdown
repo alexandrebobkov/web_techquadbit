@@ -1,6 +1,6 @@
 ---
 layout: default
-title: SmartStarts
+title: Smart Starts
 permalink: /blog/
 ---
 
